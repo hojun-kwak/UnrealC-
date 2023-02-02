@@ -22,6 +22,9 @@ private:
 private:
 
 	UPROPERTY(VisibleDefaultsOnly)
+		class UCActionComponent* Action;
+
+	UPROPERTY(VisibleDefaultsOnly)
 		class UCMontagesComponent* Montages;
 
 	UPROPERTY(VisibleDefaultsOnly)
@@ -63,4 +66,7 @@ private:
 public:
 	void End_Roll();
 	void End_Backstep();
+
+private:
+	void OnOneHand();
 };
