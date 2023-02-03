@@ -42,6 +42,9 @@ public:
 	void SetOneHandMode();
 	void SetTwoHandMode();
 
+public:
+	void DoAction();
+
 protected:
 	virtual void BeginPlay() override;
 
@@ -49,7 +52,7 @@ private:
 	void SetMode(EActionType InType);
 	void ChangeType(EActionType InNewType);
 
-private:
+public:
 	UPROPERTY(BlueprintAssignable)
 		FActionTypeChanged OnActionTypeChanged;
 

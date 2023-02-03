@@ -2,6 +2,7 @@
 #include "Global.h"
 #include "DataAsset/CActionData.h"
 #include "DataAsset/CEquipment.h"
+#include "DataAsset/CDoAction.h"
 #include "GameFramework/Character.h"
 
 UCActionComponent::UCActionComponent()
@@ -46,6 +47,19 @@ void UCActionComponent::SetOneHandMode()
 void UCActionComponent::SetTwoHandMode()
 {
 	SetMode(EActionType::TwoHand);
+}
+
+void UCActionComponent::DoAction()
+{
+	CheckTrue(IsUnarmedMode());
+
+	if (!!Datas[(int32)Type])
+	{
+		ACDoAction* action = Datas[(int32)Type]->GetDoAction();
+
+		if (!!action)
+			action->DoAction();
+	}
 }
 
 void UCActionComponent::SetMode(EActionType InType)

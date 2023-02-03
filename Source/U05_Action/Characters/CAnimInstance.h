@@ -2,6 +2,7 @@
 
 #include "CoreMinimal.h"
 #include "Animation/AnimInstance.h"
+#include "Components/CActionComponent.h"
 #include "CAnimInstance.generated.h"
 
 
@@ -16,6 +17,13 @@ protected:
 
 	UPROPERTY(BlueprintReadOnly, EditAnywhere)
 		float Direction;
+
+	UPROPERTY(BlueprintReadOnly, EditAnywhere)
+		EActionType ActionType;
+
+private:
+	UFUNCTION()
+		void OnActionTypeChanged(EActionType InPrevType, EActionType InNewType);
 
 public:
 	virtual void NativeBeginPlay() override;

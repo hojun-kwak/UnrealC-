@@ -52,7 +52,9 @@ class U05_ACTION_API UCActionData : public UDataAsset
 
 public:
     FORCEINLINE class ACEquipment* GetEquipment() { return Equipment; }
-	
+    FORCEINLINE class ACDoAction* GetDoAction() { return DoAction; }
+    FORCEINLINE class ACAttachment* GetAttachment() { return Attachment; }
+
 public:
     UPROPERTY(BlueprintReadOnly, EditAnywhere)
         TSubclassOf<class ACAttachment> AttachmentClass;
@@ -63,6 +65,12 @@ public:
     UPROPERTY(BlueprintReadOnly, EditAnywhere)
         FEquipmentData EquipmentData;
 
+    UPROPERTY(BlueprintReadOnly, EditAnywhere)
+        TSubclassOf<class ACDoAction> DoActionClass;
+
+    UPROPERTY(BlueprintReadOnly, EditAnywhere)
+        TArray<FDoActionData> DoActionDatas;
+
 public:
     void BeginPlay(class ACharacter* InOwnerCharacter);
 
@@ -70,4 +78,6 @@ private:
     class ACEquipment* Equipment;
     class ACAttachment* Attachment;
 
+    class ACDoAction* DoAction;
 };
+

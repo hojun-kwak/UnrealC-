@@ -79,6 +79,10 @@ void ACPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 	PlayerInputComponent->BindAction("OneHand", EInputEvent::IE_Pressed, this, &ACPlayer::OnOneHand);
 
+	PlayerInputComponent->BindAction("Action", EInputEvent::IE_Pressed, this, &ACPlayer::OnDoAction);
+
+	
+
 }
 
 void ACPlayer::OnMoveForward(float InAxis)
@@ -174,5 +178,10 @@ void ACPlayer::OnOneHand()
 	CheckFalse(State->IsIdleMode());
 
 	Action->SetOneHandMode();
+}
+
+void ACPlayer::OnDoAction()
+{
+	Action->DoAction();
 }
 
