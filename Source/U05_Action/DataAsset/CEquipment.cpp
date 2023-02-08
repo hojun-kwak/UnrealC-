@@ -1,13 +1,14 @@
 #include "CEquipment.h"
 #include "Global.h"
+#include "Characters/ICharacter.h"
 #include "GameFramework/Character.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Components/CStateComponent.h"
 #include "Components/CStatusComponent.h"
 
-
 ACEquipment::ACEquipment()
 {
+
 
 }
 
@@ -18,6 +19,7 @@ void ACEquipment::BeginPlay()
 	Status = CHelpers::GetComponent<UCStatusComponent>(OwnerCharacter);
 
 	Super::BeginPlay();
+
 }
 
 void ACEquipment::Equip_Implementation()
@@ -29,8 +31,18 @@ void ACEquipment::Equip_Implementation()
 	else
 		End_Equip();
 
-	OwnerCharacter->bUseControllerRotationYaw = true;
-	OwnerCharacter->GetCharacterMovement()->bOrientRotationToMovement = false;
+
+	//if (Data.bPawnControl == true)
+	{
+		OwnerCharacter->bUseControllerRotationYaw = true;
+		OwnerCharacter->GetCharacterMovement()->bOrientRotationToMovement = false;
+	}
+
+	IICharacter* character = Cast<IICharacter>(OwnerCharacter);
+	CheckNull(character);
+
+	character->ChangeColor(Color);
+
 }
 
 void ACEquipment::Begin_Equip_Implementation()
@@ -42,6 +54,7 @@ void ACEquipment::Begin_Equip_Implementation()
 void ACEquipment::End_Equip_Implementation()
 {
 	State->SetIdleMode();
+
 }
 
 void ACEquipment::Unequip_Implementation()

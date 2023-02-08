@@ -15,6 +15,7 @@ class U05_ACTION_API ACEquipment : public AActor
 
 public:
 	FORCEINLINE void SetData(FEquipmentData InData) { Data = InData; }
+	FORCEINLINE void SetColor(FLinearColor InColor) { Color = InColor; }
 
 public:
 	//ÀåÂø ¸í·É
@@ -37,8 +38,8 @@ public:
 	UFUNCTION(BlueprintNativeEvent)
 		void Unequip();
 	void Unequip_Implementation();
-	
-public:	
+
+public:
 	ACEquipment();
 
 protected:
@@ -63,5 +64,7 @@ protected:
 
 private:
 	FEquipmentData Data;
+
+	FLinearColor Color;
 
 };

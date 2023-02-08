@@ -3,10 +3,11 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "Components/CStateComponent.h"
+#include "Characters/ICharacter.h"
 #include "CPlayer.generated.h"
 
 UCLASS()
-class U05_ACTION_API ACPlayer : public ACharacter
+class U05_ACTION_API ACPlayer : public ACharacter, public IICharacter
 {
 	GENERATED_BODY()
 
@@ -70,4 +71,11 @@ public:
 private:
 	void OnOneHand();
 	void OnDoAction();
+
+public:
+	virtual void ChangeColor(FLinearColor InColor) override;
+
+private:
+	class UMaterialInstanceDynamic* BodyMaterial;
+	class UMaterialInstanceDynamic* LogoMaterial;
 };
