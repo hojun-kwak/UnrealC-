@@ -52,7 +52,7 @@ UCLASS()
 class U05_ACTION_API UCActionData : public UDataAsset
 {
 	GENERATED_BODY()
-
+	
 public:
 	FORCEINLINE class ACEquipment* GetEquipment() { return Equipment; }
 	FORCEINLINE class ACDoAction* GetDoAction() { return DoAction; }
@@ -87,4 +87,3 @@ private:
 	class ACAttachment* Attachment;
 	class ACDoAction* DoAction;
 };
-

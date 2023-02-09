@@ -8,7 +8,7 @@ void ACDoAction_Melee::DoAction()
 {
 	Super::DoAction();
 	CheckFalse(Datas.Num() > 0);
-
+	
 	if (bEnable == true)
 	{
 		bExist = true;
@@ -59,14 +59,18 @@ void ACDoAction_Melee::End_DoAction()
 
 void ACDoAction_Melee::OnAttachmentBeginOverlap(class ACharacter* InAttacker, class AActor* InAttackCauser, class ACharacter* InOtherCharacter)
 {
+	
+
 	Super::OnAttachmentBeginOverlap(InAttacker, InAttackCauser, InOtherCharacter);
 	CheckNull(InOtherCharacter);
+
+
 	//CLog::Log(InOtherCharacter->GetName());
 
 }
 
 
-void ACDoAction_Melee::OnAttachmentEndOverlap(ACharacter* InAttacker, AActor* InAttackCauser, ACharacter* InOtherCharacter)
+void ACDoAction_Melee::OnAttachmentEndOverlap(ACharacter * InAttacker, AActor * InAttackCauser, ACharacter * InOtherCharacter)
 {
 }
 

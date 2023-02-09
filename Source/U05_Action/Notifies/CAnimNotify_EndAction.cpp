@@ -1,10 +1,10 @@
+
 #include "CAnimNotify_EndAction.h"
 #include "Global.h"
 #include "Characters/CPlayer.h"
-#include "DataAsset/CActionData.h"
-#include "DataAsset/CDoAction.h"
+#include "Actions/CActionData.h"
+#include "Actions/CDoAction.h"
 #include "Components/CActionComponent.h"
-
 
 FString UCAnimNotify_EndAction::GetNotifyName_Implementation() const
 {
@@ -21,5 +21,5 @@ void UCAnimNotify_EndAction::Notify(USkeletalMeshComponent* MeshComp, UAnimSeque
 	CheckNull(action);
 
 	action->GetCurrent()->GetDoAction()->End_DoAction();
-
 }
+

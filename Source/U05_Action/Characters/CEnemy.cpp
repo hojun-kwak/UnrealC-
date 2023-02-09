@@ -1,6 +1,6 @@
 #include "CEnemy.h"
 #include "Global.h"
-#include "DataAsset/CActionData.h"
+#include "Actions/CActionData.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Animation/AnimInstance.h"
 #include "Components/SkeletalMeshComponent.h"
@@ -27,17 +27,16 @@ ACEnemy::ACEnemy()
 	GetMesh()->SetSkeletalMesh(mesh);
 
 	TSubclassOf<UAnimInstance> animInstance;
-	CHelpers::GetClass<UAnimInstance>(&animInstance, "AnimBlueprint'/Game/Enemy/ABP_CEnemy_Dummy.ABP_CEnemy_C_Dummy'");
+	CHelpers::GetClass<UAnimInstance>(&animInstance, "AnimBlueprint'/Game/Enemies/ABP_CEnemy.ABP_CEnemy_C'");
 	GetMesh()->SetAnimInstanceClass(animInstance);
 
 
 	GetCharacterMovement()->RotationRate = FRotator(0, 720, 0);
+
 }
 
 void ACEnemy::BeginPlay()
 {
-	Super::BeginPlay();
-
 	UMaterialInstanceConstant* body;
 	UMaterialInstanceConstant* logo;
 
@@ -50,14 +49,20 @@ void ACEnemy::BeginPlay()
 	GetMesh()->SetMaterial(0, BodyMaterial);
 	GetMesh()->SetMaterial(1, LogoMaterial);
 
+
+	Super::BeginPlay();
+	
 	State->OnStateTypeChanged.AddDynamic(this, &ACEnemy::OnStateTypeChanged);
 
 	Action->SetUnarmedMode();
+
+
 }
 
 void ACEnemy::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
 }
 
 void ACEnemy::ChangeColor(FLinearColor InColor)
@@ -69,7 +74,9 @@ void ACEnemy::ChangeColor(FLinearColor InColor)
 void ACEnemy::OnStateTypeChanged(EStateType InPrevType, EStateType InNewType)
 {
 	//switch (InNewType)
-   //{
-   //case EStateType::Hitted: Hitted(); break;
-   //}
+	//{
+	//case EStateType::Hitted: Hitted(); break;
+	//}
 }
+
+

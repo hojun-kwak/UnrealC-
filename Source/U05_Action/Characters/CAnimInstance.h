@@ -21,11 +21,11 @@ protected:
 	UPROPERTY(BlueprintReadOnly, EditAnywhere)
 		EActionType ActionType;
 
-private:
-	UFUNCTION()
-		void OnActionTypeChanged(EActionType InPrevType, EActionType InNewType);
-
 public:
 	virtual void NativeBeginPlay() override;
 	virtual void NativeUpdateAnimation(float DeltaSeconds) override;
+
+private:
+	UFUNCTION()
+		void OnActionTypeChanged(EActionType InPrevType, EActionType InNewType);
 };

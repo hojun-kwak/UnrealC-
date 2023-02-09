@@ -1,15 +1,15 @@
-#include "CAnimNotifyState_ComboEnable.h"
+#include "CAnimNotifyState_EnableCombo.h"
 #include "Global.h"
-#include "DataAsset/CEquipment.h"
-#include "DataAsset/CDoAction_Melee.h"
+#include "Actions/CEquipment.h"
+#include "Actions/CDoAction_Melee.h"
 #include "Components/CActionComponent.h"
 
-FString UCAnimNotifyState_ComboEnable::GetNotifyName_Implementation() const
+FString UCAnimNotifyState_EnableCombo::GetNotifyName_Implementation() const
 {
 	return "EnableCombo";
 }
 
-void UCAnimNotifyState_ComboEnable::NotifyBegin(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, float TotalDuration)
+void UCAnimNotifyState_EnableCombo::NotifyBegin(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, float TotalDuration)
 {
 	Super::NotifyBegin(MeshComp, Animation, TotalDuration);
 	CheckNull(MeshComp);
@@ -24,7 +24,7 @@ void UCAnimNotifyState_ComboEnable::NotifyBegin(USkeletalMeshComponent* MeshComp
 	melee->EnableCombo();
 }
 
-void UCAnimNotifyState_ComboEnable::NotifyEnd(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation)
+void UCAnimNotifyState_EnableCombo::NotifyEnd(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation)
 {
 	Super::NotifyEnd(MeshComp, Animation);
 	CheckNull(MeshComp);
@@ -38,5 +38,3 @@ void UCAnimNotifyState_ComboEnable::NotifyEnd(USkeletalMeshComponent* MeshComp, 
 
 	melee->DisableCombo();
 }
-
-

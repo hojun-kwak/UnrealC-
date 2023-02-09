@@ -1,8 +1,9 @@
+
 #pragma once
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "DataAsset/CActionData.h"
+#include "Actions/CActionData.h"
 #include "CEquipment.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FEquipmentDelegate);
@@ -12,7 +13,7 @@ UCLASS()
 class U05_ACTION_API ACEquipment : public AActor
 {
 	GENERATED_BODY()
-
+	
 public:
 	FORCEINLINE void SetData(FEquipmentData InData) { Data = InData; }
 	FORCEINLINE void SetColor(FLinearColor InColor) { Color = InColor; }
@@ -39,7 +40,7 @@ public:
 		void Unequip();
 	void Unequip_Implementation();
 
-public:
+public:	
 	ACEquipment();
 
 protected:

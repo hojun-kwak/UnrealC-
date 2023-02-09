@@ -1,7 +1,7 @@
 #include "CAnimNotifyState_Collision.h"
 #include "Global.h"
-#include "DataAsset/CActionData.h"
-#include "DataAsset/CAttachment.h"
+#include "Actions/CActionData.h"
+#include "Actions/CAttachment.h"
 #include "Components/CActionComponent.h"
 
 FString UCAnimNotifyState_Collision::GetNotifyName_Implementation() const
@@ -12,7 +12,6 @@ FString UCAnimNotifyState_Collision::GetNotifyName_Implementation() const
 void UCAnimNotifyState_Collision::NotifyBegin(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation, float TotalDuration)
 {
 	Super::NotifyBegin(MeshComp, Animation, TotalDuration);
-
 	CheckNull(MeshComp);
 	CheckNull(MeshComp->GetOwner());
 
@@ -28,7 +27,6 @@ void UCAnimNotifyState_Collision::NotifyBegin(USkeletalMeshComponent* MeshComp, 
 void UCAnimNotifyState_Collision::NotifyEnd(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation)
 {
 	Super::NotifyEnd(MeshComp, Animation);
-
 	CheckNull(MeshComp);
 	CheckNull(MeshComp->GetOwner());
 

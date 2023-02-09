@@ -5,22 +5,20 @@
 #include "CDoAction.h"
 #include "GameFramework/Character.h"
 #include "Components/SkeletalMeshComponent.h"
-#include "Materials/MaterialInstanceConstant.h"
-#include "Materials/MaterialInstanceDynamic.h"
 
 
 void UCActionData::BeginPlay(ACharacter* InOwnerCharacter)
 {
 	FTransform transform;
 
-	if (!!AttachmentClass)
+	if(!!AttachmentClass)
 	{
 		Attachment = InOwnerCharacter->GetWorld()->SpawnActorDeferred<ACAttachment>(AttachmentClass, transform, InOwnerCharacter);
 		Attachment->SetActorLabel(InOwnerCharacter->GetActorLabel() + "_Attachment");
 		UGameplayStatics::FinishSpawningActor(Attachment, transform);
 	}
 
-	if (!!EquipmentClass)
+	if(!!EquipmentClass)
 	{
 		Equipment = InOwnerCharacter->GetWorld()->SpawnActorDeferred<ACEquipment>(EquipmentClass, transform, InOwnerCharacter);
 		Equipment->AttachToComponent(InOwnerCharacter->GetMesh(), FAttachmentTransformRules(EAttachmentRule::KeepRelative, true));
@@ -36,7 +34,7 @@ void UCActionData::BeginPlay(ACharacter* InOwnerCharacter)
 		}
 	}
 
-	if (!!DoActionClass)
+	if(!!DoActionClass)
 	{
 		DoAction = InOwnerCharacter->GetWorld()->SpawnActorDeferred<ACDoAction>(DoActionClass, transform, InOwnerCharacter);
 		DoAction->AttachToComponent(InOwnerCharacter->GetMesh(), FAttachmentTransformRules(EAttachmentRule::KeepRelative, true));

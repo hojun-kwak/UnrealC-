@@ -14,7 +14,7 @@ UCLASS()
 class U05_ACTION_API ACAttachment : public AActor
 {
 	GENERATED_BODY()
-
+	
 protected:
 	UPROPERTY(BlueprintReadOnly, VisibleDefaultsOnly)
 		class USceneComponent* Scene;
@@ -28,7 +28,7 @@ protected:
 	UFUNCTION(BlueprintCallable)
 		void AttachToCollision(class UShapeComponent* InComponent, FName InSocketName);
 
-public:
+public:	
 	ACAttachment();
 
 	void OnCollision();

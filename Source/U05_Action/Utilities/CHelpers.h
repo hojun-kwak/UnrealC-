@@ -61,6 +61,7 @@ public:
 		return Cast<T>(InActor->GetComponentByClass(T::StaticClass()));
 	}
 
+
 	template<typename T>
 	static void FindActors(class UWorld* InWorld, TArray<T *>& OutActors)
 	{

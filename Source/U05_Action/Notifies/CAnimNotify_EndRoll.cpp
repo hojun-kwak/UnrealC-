@@ -18,3 +18,4 @@ void UCAnimNotify_EndRoll::Notify(USkeletalMeshComponent* MeshComp, UAnimSequenc
 
 	player->End_Roll();
 }
+

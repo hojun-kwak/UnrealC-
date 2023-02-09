@@ -8,7 +8,7 @@
 
 ACEquipment::ACEquipment()
 {
-
+ 	
 
 }
 
@@ -19,7 +19,7 @@ void ACEquipment::BeginPlay()
 	Status = CHelpers::GetComponent<UCStatusComponent>(OwnerCharacter);
 
 	Super::BeginPlay();
-
+	
 }
 
 void ACEquipment::Equip_Implementation()

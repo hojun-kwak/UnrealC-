@@ -2,19 +2,19 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "DataAsset/CActionData.h"
+#include "Actions/CActionData.h"
 #include "CDoAction.generated.h"
 
 UCLASS()
 class U05_ACTION_API ACDoAction : public AActor
 {
 	GENERATED_BODY()
-
+	
 
 public:
 	FORCEINLINE void SetDatas(TArray<FDoActionData> InDatas) { Datas = InDatas; }
 
-public:
+public:	
 	ACDoAction();
 
 public:
@@ -26,7 +26,7 @@ public:
 protected:
 	virtual void BeginPlay() override;
 
-public:
+public:	
 	virtual void Tick(float DeltaTime) override;
 
 public:

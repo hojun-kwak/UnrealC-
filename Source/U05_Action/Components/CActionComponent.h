@@ -1,3 +1,4 @@
+
 #pragma once
 
 #include "CoreMinimal.h"
@@ -11,6 +12,7 @@ enum class EActionType : uint8
 };
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FActionTypeChanged, EActionType, InPrevType, EActionType, InNewType);
+
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class U05_ACTION_API UCActionComponent : public UActorComponent
@@ -58,5 +60,4 @@ public:
 
 private:
 	EActionType Type;
-		
 };

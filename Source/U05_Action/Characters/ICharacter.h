@@ -1,4 +1,3 @@
-
 #pragma once
 
 #include "CoreMinimal.h"
@@ -10,6 +9,7 @@ class UICharacter : public UInterface
 {
 	GENERATED_BODY()
 };
+
 
 class U05_ACTION_API IICharacter
 {

@@ -21,7 +21,6 @@ private:
 
 
 private:
-
 	UPROPERTY(VisibleDefaultsOnly)
 		class UCActionComponent* Action;
 
@@ -70,6 +69,7 @@ public:
 
 private:
 	void OnOneHand();
+
 	void OnDoAction();
 
 public:
@@ -78,4 +78,5 @@ public:
 private:
 	class UMaterialInstanceDynamic* BodyMaterial;
 	class UMaterialInstanceDynamic* LogoMaterial;
+
 };

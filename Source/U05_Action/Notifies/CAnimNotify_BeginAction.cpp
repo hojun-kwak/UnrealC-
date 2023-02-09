@@ -1,8 +1,8 @@
 #include "CAnimNotify_BeginAction.h"
 #include "Global.h"
 #include "Characters/CPlayer.h"
-#include "DataAsset/CActionData.h"
-#include "DataAsset/CDoAction.h"
+#include "Actions/CActionData.h"
+#include "Actions/CDoAction.h"
 #include "Components/CActionComponent.h"
 
 FString UCAnimNotify_BeginAction::GetNotifyName_Implementation() const
@@ -13,7 +13,6 @@ FString UCAnimNotify_BeginAction::GetNotifyName_Implementation() const
 void UCAnimNotify_BeginAction::Notify(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation)
 {
 	Super::Notify(MeshComp, Animation);
-
 	CheckNull(MeshComp);
 	CheckNull(MeshComp->GetOwner());
 
@@ -22,3 +21,4 @@ void UCAnimNotify_BeginAction::Notify(USkeletalMeshComponent* MeshComp, UAnimSeq
 
 	action->GetCurrent()->GetDoAction()->Begin_DoAction();
 }
+
