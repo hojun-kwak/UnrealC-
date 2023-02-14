@@ -109,6 +109,22 @@ void ACEnemy::Hitted()
 	Status->SubHealth(DamageValue);
 	Cast<UCUserWidget_Health>(HealthWidget->GetUserWidgetObject())->Update(Status->GetHealth(), Status->GetMaxHealth());
 	DamageValue = 0.0f;
+
+	Status->SetStop();
+	Montages->PlayHitted();
+
+	FVector start = GetActorLocation();
+	FVector target = DamageInstigator->GetPawn()->GetActorLocation();
+	SetActorRotation(UKismetMathLibrary::FindLookAtRotation(start, target));
+	DamageInstigator = NULL;
+
+	FVector direction = target - start;
+	direction.Normalize();
+	LaunchCharacter(-direction * LaunchAmount, true, false);
+
+	ChangeColor(FLinearColor(1, 0, 0, 1));
+
+	UKismetSystemLibrary::K2_SetTimer(this, "RestoreColor", 0.2f, false);
 }
 
 float ACEnemy::TakeDamage(float Damage, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
@@ -121,4 +137,10 @@ float ACEnemy::TakeDamage(float Damage, FDamageEvent const& DamageEvent, AContro
 	return Status->GetHealth();
 }
 
+void ACEnemy::RestoreColor()
+{
+	FLinearColor color = Action->GetCurrent()->GetEquipmentColor();
+
+	ChangeColor(color);
+}
 

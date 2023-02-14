@@ -11,6 +11,10 @@ class U05_ACTION_API ACEnemy : public ACharacter, public IICharacter
 {
 	GENERATED_BODY()
 
+private:
+	UPROPERTY(EditAnywhere, Category = "Hitted")
+		float LaunchAmount = 100.0f;
+
 protected:
 	UPROPERTY(VisibleDefaultsOnly)
 		class UWidgetComponent* NameWidget;
@@ -46,6 +50,9 @@ public:
 private:
 	UFUNCTION()
 		void OnStateTypeChanged(EStateType InPrevType, EStateType InNewType);
+
+	UFUNCTION()
+		void RestoreColor();
 
 private:
 	void Hitted();

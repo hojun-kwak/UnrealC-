@@ -26,9 +26,15 @@ public:
 	virtual void OffAttachmentCollision();
 
 private:
+	UFUNCTION()
+		void RestoreDilation();
+
+private:
 	bool bExist;
 	bool bEnable;
 	bool bLast;
 
 	int32 Index;
+
+	TArray<class ACharacter*> HittedCharacters;
 };
