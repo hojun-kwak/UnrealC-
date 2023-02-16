@@ -56,6 +56,11 @@ void UCActionComponent::SetTwoHandMode()
 
 }
 
+void UCActionComponent::SetFistMode()
+{
+	SetMode(EActionType::Fist);
+}
+
 void UCActionComponent::SetMode(EActionType InType)
 {
 	if (Type == InType) //같은 무기 해제
