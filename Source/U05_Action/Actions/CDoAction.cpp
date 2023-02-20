@@ -22,7 +22,8 @@ void ACDoAction::BeginPlay()
 
 void ACDoAction::Tick(float DeltaTime)
 {
-	Super::Tick(DeltaTime);
+	//CheckFalse(bEquipped);
 
+	Super::Tick(DeltaTime);
 }
 

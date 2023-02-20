@@ -10,6 +10,7 @@
 void ACDoAction_Melee::DoAction()
 {
 	Super::DoAction();
+
 	CheckFalse(Datas.Num() > 0);
 	
 	if (bEnable == true)
@@ -32,7 +33,6 @@ void ACDoAction_Melee::DoAction()
 void ACDoAction_Melee::Begin_DoAction()
 {
 	Super::Begin_DoAction();
-
 	CheckFalse(bExist);
 	bExist = false;
 

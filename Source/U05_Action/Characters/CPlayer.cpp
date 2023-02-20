@@ -10,6 +10,7 @@
 #include "Components/COptionComponent.h"
 #include "Components/CStatusComponent.h"
 #include "Components/CMontagesComponent.h"
+#include "Components/CTargetComponent.h"
 #include "Materials/MaterialInstanceConstant.h"
 #include "Materials/MaterialInstanceDynamic.h"
 
@@ -21,6 +22,7 @@ ACPlayer::ACPlayer()
 	CHelpers::CreateComponent<UCameraComponent>(this, &Camera, "Camera", SpringArm);
 	
 	CHelpers::CreateActorComponent<UCActionComponent>(this, &Action, "Action");
+	CHelpers::CreateActorComponent<UCTargetComponent>(this, &Target, "Target");
 	CHelpers::CreateActorComponent<UCMontagesComponent>(this, &Montages, "Montages");
 	CHelpers::CreateActorComponent<UCOptionComponent>(this, &Option, "Option");
 	CHelpers::CreateActorComponent<UCStatusComponent>(this, &Status, "Status");
@@ -95,7 +97,10 @@ void ACPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	PlayerInputComponent->BindAction("TwoHand", EInputEvent::IE_Pressed, this, &ACPlayer::OnTwoHand);
 	PlayerInputComponent->BindAction("Fist", EInputEvent::IE_Pressed, this, &ACPlayer::OnFist);
 
+	PlayerInputComponent->BindAction("Warp", EInputEvent::IE_Pressed, this, &ACPlayer::onWarp);
+
 	PlayerInputComponent->BindAction("Action", EInputEvent::IE_Pressed, this, &ACPlayer::OnDoAction);
+	PlayerInputComponent->BindAction("Target", EInputEvent::IE_Pressed, this, &ACPlayer::OnTarget);
 }
 
 void ACPlayer::OnMoveForward(float InAxis)
@@ -207,9 +212,21 @@ void ACPlayer::OnFist()
 	Action->SetFistMode();
 }
 
+void ACPlayer::onWarp()
+{
+	CheckFalse(State->IsIdleMode());
+
+	Action->SetWarpMode();
+}
+
 void ACPlayer::OnDoAction()
 {
 	Action->DoAction();
+}
+
+void ACPlayer::OnTarget()
+{
+	Target->ToggleTarget();
 }
 
 void ACPlayer::ChangeColor(FLinearColor InColor)

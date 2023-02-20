@@ -13,6 +13,7 @@ class U05_ACTION_API ACDoAction : public AActor
 
 public:
 	FORCEINLINE void SetDatas(TArray<FDoActionData> InDatas) { Datas = InDatas; }
+	FORCEINLINE void SetEquipped(const bool* InEquipped) { bEquipped = InEquipped; }
 
 public:	
 	ACDoAction();
@@ -54,5 +55,6 @@ protected:
 
 protected:
 	TArray<FDoActionData> Datas;
+	const bool *bEquipped;
 
 };

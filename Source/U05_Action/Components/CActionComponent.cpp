@@ -61,6 +61,11 @@ void UCActionComponent::SetFistMode()
 	SetMode(EActionType::Fist);
 }
 
+void UCActionComponent::SetWarpMode()
+{
+	SetMode(EActionType::Warp);
+}
+
 void UCActionComponent::SetMode(EActionType InType)
 {
 	if (Type == InType) //같은 무기 해제
