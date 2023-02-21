@@ -101,6 +101,9 @@ void ACPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 	PlayerInputComponent->BindAction("Action", EInputEvent::IE_Pressed, this, &ACPlayer::OnDoAction);
 	PlayerInputComponent->BindAction("Target", EInputEvent::IE_Pressed, this, &ACPlayer::OnTarget);
+
+	PlayerInputComponent->BindAction("TargetLeft", EInputEvent::IE_Pressed, this, &ACPlayer::OnTargetLeft);
+	PlayerInputComponent->BindAction("TargetRight", EInputEvent::IE_Pressed, this, &ACPlayer::OnTargetRight);
 }
 
 void ACPlayer::OnMoveForward(float InAxis)
@@ -227,6 +230,16 @@ void ACPlayer::OnDoAction()
 void ACPlayer::OnTarget()
 {
 	Target->ToggleTarget();
+}
+
+void ACPlayer::OnTargetLeft()
+{
+	Target->ChangeTargetLeft();
+}
+
+void ACPlayer::OnTargetRight()
+{
+	Target->ChangeTargetRight();
 }
 
 void ACPlayer::ChangeColor(FLinearColor InColor)

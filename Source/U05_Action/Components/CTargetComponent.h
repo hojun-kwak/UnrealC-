@@ -16,7 +16,7 @@ private:
         float TraceRadius = 1000.0f;
 
     UPROPERTY(EditAnywhere)
-        float InteropSpeed = 2.5f;
+        float InteropSpeed = 2.5f; // 보관방법?
 
     UPROPERTY(EditAnywhere)
         TEnumAsByte<EDrawDebugTrace::Type> Debug;
