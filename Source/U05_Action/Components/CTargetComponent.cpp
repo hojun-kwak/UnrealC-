@@ -5,25 +5,59 @@
 #include "Particles/ParticleSystem.h"
 #include "Particles/ParticleSystemComponent.h"
 
+
 UCTargetComponent::UCTargetComponent()
 {
+	
 	PrimaryComponentTick.bCanEverTick = true;
-
+	
 	CHelpers::GetAsset<UParticleSystem>(&Particle, "ParticleSystem'/Game/Effects/P_Enrage_Base.P_Enrage_Base'");
 
-	
 
+	
 }
 
 
 void UCTargetComponent::BeginPlay()
 {
 	Super::BeginPlay();
-	
+
 	OwnerCharacter = Cast<ACharacter>(GetOwner());
+
+	
 }
 
-// 누를떄마다 달라져야 하기 때문에 토글을 사용한다.
+
+void UCTargetComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
+{
+	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+	
+	CheckNull(Target);
+
+	UCStateComponent* state = CHelpers::GetComponent<UCStateComponent>(Target);
+
+	bool b = false;
+	b |= state->IsDeadMode();
+	b |= Target->GetDistanceTo(OwnerCharacter) >= TraceRadius;
+
+	if (b == true)
+	{
+		EndTargeting();
+
+		return;
+	}
+
+	FVector start = OwnerCharacter->GetActorLocation();
+	FVector target = Target->GetActorLocation();
+
+	FRotator rotator = UKismetMathLibrary::FindLookAtRotation(start, target);
+	FRotator current = OwnerCharacter->GetControlRotation();
+
+	rotator = UKismetMathLibrary::RInterpTo(current, rotator, DeltaTime, InteropSpeed);
+	OwnerCharacter->GetController()->SetControlRotation(rotator);
+
+}
+
 void UCTargetComponent::ToggleTarget()
 {
 	if (!!Target)
@@ -84,10 +118,9 @@ void UCTargetComponent::SetTraceTargets()
 			TraceTargets.AddUnique(character);
 	}
 
-	/*for (const ACharacter* character : TraceTargets)
-	{
-		CLog::Print(character->GetActorLabel());
-	}*/
+	//for (const ACharacter* character : TraceTargets)
+	//	CLog::Print(character->GetName());
+
 }
 
 void UCTargetComponent::SetTarget()
@@ -99,20 +132,19 @@ void UCTargetComponent::SetTarget()
 	{
 		FVector direction = FQuat(OwnerCharacter->GetControlRotation()).GetForwardVector();
 		FVector offset = character->GetActorLocation() - OwnerCharacter->GetActorLocation();
-		offset = offset.GetSafeNormal(); // Normalize == safeNormal
+		offset = offset.GetSafeNormal();
 
-		float temp = direction | offset; // | dot product
+		float temp = direction | offset;
 		if (temp < angle)
 			continue;
 
 		angle = temp;
 		target = character;
 	}
-
+	
 	//CLog::Print(target->GetActorLabel());
 
 	ChangeCursor(target);
-
 }
 
 void UCTargetComponent::ChangeTarget(bool InRight)
@@ -127,9 +159,9 @@ void UCTargetComponent::ChangeTarget(bool InRight)
 
 		FVector targetLocation = character->GetActorLocation();
 		FVector ownerLocation = OwnerCharacter->GetActorLocation();
-		FVector ownerToTarget = targetLocation - ownerLocation; // 플레이어와 타겟된위치를 뺴서 음수나 양수에 따라 왼쪽 오른쪽을 정함
+		FVector ownerToTarget = targetLocation - ownerLocation;
 
-		FQuat quat = FQuat(OwnerCharacter->GetControlRotation()); // 전방 벡터
+		FQuat quat = FQuat(OwnerCharacter->GetControlRotation());
 		FVector forward = quat.GetForwardVector();
 		FVector up = quat.GetUpVector();
 
@@ -144,7 +176,7 @@ void UCTargetComponent::ChangeTarget(bool InRight)
 	ACharacter* target = NULL;
 
 	TArray<float> keys;
-	map.GetKeys(keys); // Keys -> 거리가 들어감
+	map.GetKeys(keys);
 	for (float key : keys)
 	{
 		if (InRight == true)
@@ -162,19 +194,20 @@ void UCTargetComponent::ChangeTarget(bool InRight)
 			continue;
 
 		minimum = FMath::Abs(key);
-		target = *map.Find(key); // value가 반환된다
+		target = *map.Find(key);
 	}
 
 	ChangeCursor(target);
+
 }
 
-void UCTargetComponent::ChangeCursor(ACharacter* InTarget)
+void UCTargetComponent::ChangeCursor(ACharacter * InTarget)
 {
 	if (!!InTarget)
 	{
 		if (!!Attached)
 			Attached->DestroyComponent();
-		
+
 		Attached = UGameplayStatics::SpawnEmitterAttached(Particle, InTarget->GetMesh(), "Spine_Target");
 		Target = InTarget;
 
@@ -184,29 +217,4 @@ void UCTargetComponent::ChangeCursor(ACharacter* InTarget)
 	EndTargeting();
 }
 
-void UCTargetComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
-{
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
-	CheckNull(Target);
-
-	if (Target->GetDistanceTo(OwnerCharacter) >= TraceRadius)
-	{
-		EndTargeting();
-
-		return;
-	}
-
-	FVector start = OwnerCharacter->GetActorLocation();
-	FVector target = Target->GetActorLocation();
-
-	FRotator rotator = UKismetMathLibrary::FindLookAtRotation(start, target);
-	FRotator current = OwnerCharacter->GetControlRotation();
-
-	rotator = UKismetMathLibrary::RInterpTo(current, rotator, DeltaTime, InteropSpeed); // 카메라 부드럽게 하기
-
-
-	OwnerCharacter->GetController()->SetControlRotation(rotator);
-
-}
 

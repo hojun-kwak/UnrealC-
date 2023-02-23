@@ -7,10 +7,10 @@
 #include "Components/SkeletalMeshComponent.h"
 #include "Components/InputComponent.h"
 #include "Components/CActionComponent.h"
+#include "Components/CTargetComponent.h"
 #include "Components/COptionComponent.h"
 #include "Components/CStatusComponent.h"
 #include "Components/CMontagesComponent.h"
-#include "Components/CTargetComponent.h"
 #include "Materials/MaterialInstanceConstant.h"
 #include "Materials/MaterialInstanceDynamic.h"
 
@@ -93,15 +93,15 @@ void ACPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 	PlayerInputComponent->BindAction("Avoid", EInputEvent::IE_Pressed, this, &ACPlayer::OnAvoid);
 
+	PlayerInputComponent->BindAction("Fist", EInputEvent::IE_Pressed, this, &ACPlayer::OnFist);
 	PlayerInputComponent->BindAction("OneHand", EInputEvent::IE_Pressed, this, &ACPlayer::OnOneHand);
 	PlayerInputComponent->BindAction("TwoHand", EInputEvent::IE_Pressed, this, &ACPlayer::OnTwoHand);
-	PlayerInputComponent->BindAction("Fist", EInputEvent::IE_Pressed, this, &ACPlayer::OnFist);
-
-	PlayerInputComponent->BindAction("Warp", EInputEvent::IE_Pressed, this, &ACPlayer::onWarp);
+	PlayerInputComponent->BindAction("Warp", EInputEvent::IE_Pressed, this, &ACPlayer::OnWarp);
+	PlayerInputComponent->BindAction("FireStorm", EInputEvent::IE_Pressed, this, &ACPlayer::OnFireStorm);
 
 	PlayerInputComponent->BindAction("Action", EInputEvent::IE_Pressed, this, &ACPlayer::OnDoAction);
-	PlayerInputComponent->BindAction("Target", EInputEvent::IE_Pressed, this, &ACPlayer::OnTarget);
 
+	PlayerInputComponent->BindAction("Target", EInputEvent::IE_Pressed, this, &ACPlayer::OnTarget);
 	PlayerInputComponent->BindAction("TargetLeft", EInputEvent::IE_Pressed, this, &ACPlayer::OnTargetLeft);
 	PlayerInputComponent->BindAction("TargetRight", EInputEvent::IE_Pressed, this, &ACPlayer::OnTargetRight);
 }
@@ -194,6 +194,13 @@ void ACPlayer::End_Backstep()
 	State->SetIdleMode();
 }
 
+void ACPlayer::OnFist()
+{
+	CheckFalse(State->IsIdleMode());
+
+	Action->SetFistMode();
+}
+
 void ACPlayer::OnOneHand()
 {
 	CheckFalse(State->IsIdleMode());
@@ -208,18 +215,18 @@ void ACPlayer::OnTwoHand()
 	Action->SetTwoHandMode();
 }
 
-void ACPlayer::OnFist()
-{
-	CheckFalse(State->IsIdleMode());
-
-	Action->SetFistMode();
-}
-
-void ACPlayer::onWarp()
+void ACPlayer::OnWarp()
 {
 	CheckFalse(State->IsIdleMode());
 
 	Action->SetWarpMode();
+}
+
+void ACPlayer::OnFireStorm()
+{
+	CheckFalse(State->IsIdleMode());
+
+	Action->SetFireStormMode();
 }
 
 void ACPlayer::OnDoAction()
@@ -241,6 +248,8 @@ void ACPlayer::OnTargetRight()
 {
 	Target->ChangeTargetRight();
 }
+
+
 
 void ACPlayer::ChangeColor(FLinearColor InColor)
 {

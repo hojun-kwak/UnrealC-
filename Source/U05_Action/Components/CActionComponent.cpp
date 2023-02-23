@@ -1,6 +1,7 @@
 #include "CActionComponent.h"
 #include "Global.h"
 #include "Actions/CActionData.h"
+#include "Actions/CAttachment.h"
 #include "Actions/CEquipment.h"
 #include "Actions/CDoAction.h"
 #include "GameFramework/Character.h"
@@ -44,6 +45,11 @@ void UCActionComponent::SetUnarmedMode()
 
 }
 
+void UCActionComponent::SetFistMode()
+{
+	SetMode(EActionType::Fist);
+}
+
 void UCActionComponent::SetOneHandMode()
 {
 	SetMode(EActionType::OneHand);
@@ -56,15 +62,30 @@ void UCActionComponent::SetTwoHandMode()
 
 }
 
-void UCActionComponent::SetFistMode()
-{
-	SetMode(EActionType::Fist);
-}
-
 void UCActionComponent::SetWarpMode()
 {
 	SetMode(EActionType::Warp);
 }
+
+void UCActionComponent::SetFireStormMode()
+{
+	SetMode(EActionType::FireStorm);
+}
+
+void UCActionComponent::OffAllCollision()
+{
+	for (UCActionData * data : Datas)
+	{
+		if (!!data == false)
+			continue;
+
+		if (!!data->GetAttachment() == false)
+			continue;
+
+		data->GetAttachment()->OffCollision();
+	}
+}
+
 
 void UCActionComponent::SetMode(EActionType InType)
 {

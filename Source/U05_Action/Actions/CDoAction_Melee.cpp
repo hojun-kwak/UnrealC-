@@ -10,7 +10,6 @@
 void ACDoAction_Melee::DoAction()
 {
 	Super::DoAction();
-
 	CheckFalse(Datas.Num() > 0);
 	
 	if (bEnable == true)
@@ -33,6 +32,7 @@ void ACDoAction_Melee::DoAction()
 void ACDoAction_Melee::Begin_DoAction()
 {
 	Super::Begin_DoAction();
+
 	CheckFalse(bExist);
 	bExist = false;
 
@@ -62,6 +62,7 @@ void ACDoAction_Melee::End_DoAction()
 
 void ACDoAction_Melee::OnAttachmentBeginOverlap(class ACharacter* InAttacker, class AActor* InAttackCauser, class ACharacter* InOtherCharacter)
 {
+
 	Super::OnAttachmentBeginOverlap(InAttacker, InAttackCauser, InOtherCharacter);
 	CheckNull(InOtherCharacter);
 
@@ -82,9 +83,9 @@ void ACDoAction_Melee::OnAttachmentBeginOverlap(class ACharacter* InAttacker, cl
 	}
 
 	float hitStop = Datas[Index].HitStop;
-	if (FMath::IsNearlyZero(hitStop) == false) // 0ÀÇ ±ÙÁ¢
+	if (FMath::IsNearlyZero(hitStop) == false)
 	{
-		UGameplayStatics::SetGlobalTimeDilation(GetWorld(), 1e-3f); // 0.003
+		UGameplayStatics::SetGlobalTimeDilation(GetWorld(), 1e-3f);
 		UKismetSystemLibrary::K2_SetTimer(this, "RestoreDilation", hitStop * 1e-3f, false);
 	}
 
@@ -92,9 +93,11 @@ void ACDoAction_Melee::OnAttachmentBeginOverlap(class ACharacter* InAttacker, cl
 	if (shake != NULL)
 		GetWorld()->GetFirstPlayerController()->ClientStartCameraShake(shake);
 
+
 	FDamageEvent e;
+
 	InOtherCharacter->TakeDamage(Datas[Index].Power, e, OwnerCharacter->GetController(), this);
-	
+
 	//CLog::Log(InOtherCharacter->GetName());
 
 }
@@ -106,11 +109,13 @@ void ACDoAction_Melee::OnAttachmentEndOverlap(ACharacter * InAttacker, AActor * 
 
 void ACDoAction_Melee::OnAttachmentCollision()
 {
+
 }
 
 void ACDoAction_Melee::OffAttachmentCollision()
 {
 	HittedCharacters.Empty();
+
 }
 
 void ACDoAction_Melee::RestoreDilation()

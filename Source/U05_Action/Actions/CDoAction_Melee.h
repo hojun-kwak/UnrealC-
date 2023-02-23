@@ -35,6 +35,7 @@ private:
 	bool bLast;
 
 	int32 Index;
-
 	TArray<class ACharacter*> HittedCharacters;
+
+
 };

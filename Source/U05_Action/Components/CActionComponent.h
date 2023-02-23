@@ -8,7 +8,7 @@
 UENUM(BlueprintType)
 enum class EActionType : uint8
 {
-	Unarmed, OneHand, TwoHand, Fist, Warp, Max,
+	Unarmed, Fist, OneHand, TwoHand, Warp, FireStorm, Max,
 };
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FActionTypeChanged, EActionType, InPrevType, EActionType, InNewType);
@@ -28,9 +28,11 @@ public:
 		FORCEINLINE class UCActionData* GetCurrent() { return Datas[(int32)Type]; }
 
 public:
-
 	UFUNCTION(BlueprintPure)
 		FORCEINLINE bool IsUnarmedMode() { return Type == EActionType::Unarmed; }
+
+	UFUNCTION(BlueprintPure)
+		FORCEINLINE bool IsFistMode() { return Type == EActionType::Fist; }
 
 	UFUNCTION(BlueprintPure)
 		FORCEINLINE bool IsOneHandMode() { return Type == EActionType::OneHand; }
@@ -39,21 +41,24 @@ public:
 		FORCEINLINE bool IsTwoHandMode() { return Type == EActionType::TwoHand; }
 
 	UFUNCTION(BlueprintPure)
-		FORCEINLINE bool IsFistMode() { return Type == EActionType::Fist; }
-
-	UFUNCTION(BlueprintPure)
 		FORCEINLINE bool IsWarpMode() { return Type == EActionType::Warp; }
 
-	
+	UFUNCTION(BlueprintPure)
+		FORCEINLINE bool IsFireStormMode() { return Type == EActionType::FireStorm; }
 
 public:	
 	UCActionComponent();
 
 	void SetUnarmedMode();
+	void SetFistMode();
 	void SetOneHandMode();
 	void SetTwoHandMode();
-	void SetFistMode();
 	void SetWarpMode();
+	void SetFireStormMode();
+
+
+	void OffAllCollision();
+
 
 public:
 	void DoAction();

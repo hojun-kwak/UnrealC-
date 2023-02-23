@@ -18,4 +18,6 @@ class U05_ACTION_API IICharacter
 public:
 	virtual void ChangeColor(FLinearColor InColor) = 0;
 
+	virtual void Begin_Dead() {}
+	virtual void End_Dead() {}
 };

@@ -12,7 +12,7 @@ class U05_ACTION_API UCStatusComponent : public UActorComponent
 
 private:
 	UPROPERTY(EditDefaultsOnly, Category = "Health")
-		float MaxHealth = 100.0f;
+		float MaxHealth = 100;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Speed")
 		float WalkSpeed = 200.0f;
@@ -24,12 +24,12 @@ private:
 		float SprintSpeed = 600.0f;
 
 public:
+	FORCEINLINE float GetMaxHealth() { return MaxHealth; }
+	FORCEINLINE float GetHealth() { return Health; }
+
 	FORCEINLINE float GetWalkSpeed() { return WalkSpeed; }
 	FORCEINLINE float GetRunkSpeed() { return RunkSpeed; }
 	FORCEINLINE float GetSprintSpeed() { return SprintSpeed; }
-
-	FORCEINLINE float GetMaxHealth() { return MaxHealth; }
-	FORCEINLINE float GetHealth() { return Health; }
 
 	FORCEINLINE bool CanMove() { return bCanMove; }
 
@@ -46,6 +46,7 @@ protected:
 	virtual void BeginPlay() override;
 
 private:
+	float Health;
+
 	bool bCanMove = true;
-	float Health = 0.0f;
 };

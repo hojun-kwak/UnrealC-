@@ -54,7 +54,8 @@ protected:
 		class UCStatusComponent* Status;
 
 protected:
+	const bool* bEquipped;
+
 	TArray<FDoActionData> Datas;
-	const bool *bEquipped;
 
 };

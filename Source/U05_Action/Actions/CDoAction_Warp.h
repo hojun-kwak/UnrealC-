@@ -1,8 +1,10 @@
+
 #pragma once
 
 #include "CoreMinimal.h"
 #include "Actions/CDoAction.h"
 #include "CDoAction_Warp.generated.h"
+
 
 UCLASS()
 class U05_ACTION_API ACDoAction_Warp : public ACDoAction
@@ -25,5 +27,4 @@ private:
 private:
 	class UDecalComponent* Decal;
 	FVector Location;
-	
 };

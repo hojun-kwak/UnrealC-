@@ -1,10 +1,10 @@
 #include "CStateComponent.h"
-#include "Global.h"
 
 UCStateComponent::UCStateComponent()
 {
 
 }
+
 
 void UCStateComponent::BeginPlay()
 {
@@ -42,6 +42,11 @@ void UCStateComponent::SetActionMode()
 void UCStateComponent::SetHittedMode()
 {
 	ChangeType(EStateType::Hitted);
+}
+
+void UCStateComponent::SetDeadMode()
+{
+	ChangeType(EStateType::Dead);
 }
 
 void UCStateComponent::ChangeType(EStateType InType)

@@ -22,3 +22,4 @@ void UCAnimNotify_Hitted::Notify(USkeletalMeshComponent* MeshComp, UAnimSequence
 
 	state->SetIdleMode();
 }
+

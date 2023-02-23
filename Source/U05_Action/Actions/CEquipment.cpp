@@ -54,6 +54,7 @@ void ACEquipment::Begin_Equip_Implementation()
 void ACEquipment::End_Equip_Implementation()
 {
 	bEquipped = true;
+
 	State->SetIdleMode();
 
 }

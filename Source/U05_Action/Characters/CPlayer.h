@@ -71,16 +71,20 @@ public:
 	void End_Backstep();
 
 private:
+
+	void OnFist();
 	void OnOneHand();
 	void OnTwoHand();
-	void OnFist();
-	void onWarp();
+	void OnWarp();
+	void OnFireStorm();
+
 
 	void OnDoAction();
-	void OnTarget();
 
+	void OnTarget();
 	void OnTargetLeft();
 	void OnTargetRight();
+
 
 public:
 	virtual void ChangeColor(FLinearColor InColor) override;

@@ -4,6 +4,7 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Animation/AnimInstance.h"
 #include "Components/SkeletalMeshComponent.h"
+#include "Components/CapsuleComponent.h"
 #include "Components/CActionComponent.h"
 #include "Components/CStatusComponent.h"
 #include "Components/CMontagesComponent.h"
@@ -53,6 +54,7 @@ ACEnemy::ACEnemy()
 	HealthWidget->SetDrawSize(FVector2D(120, 20));
 	HealthWidget->SetWidgetSpace(EWidgetSpace::Screen);
 
+
 }
 
 void ACEnemy::BeginPlay()
@@ -74,6 +76,7 @@ void ACEnemy::BeginPlay()
 	
 	State->OnStateTypeChanged.AddDynamic(this, &ACEnemy::OnStateTypeChanged);
 
+
 	NameWidget->InitWidget();
 	Cast<UCUserWidget_Name>(NameWidget->GetUserWidgetObject())->SetNameText(GetActorLabel());
 
@@ -81,7 +84,10 @@ void ACEnemy::BeginPlay()
 	Cast<UCUserWidget_Health>(HealthWidget->GetUserWidgetObject())->Update(Status->GetHealth(), Status->GetMaxHealth());
 
 	Action->SetUnarmedMode();
-	
+
+
+
+
 }
 
 void ACEnemy::Tick(float DeltaTime)
@@ -100,8 +106,20 @@ void ACEnemy::OnStateTypeChanged(EStateType InPrevType, EStateType InNewType)
 {
 	switch (InNewType)
 	{
-	case EStateType::Hitted: Hitted(); break;
+		case EStateType::Hitted: Hitted(); break;
+		case EStateType::Dead: Dead(); break;
+
 	}
+}
+
+float ACEnemy::TakeDamage(float Damage, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
+{
+	DamageInstigator = EventInstigator;
+	DamageValue = Super::TakeDamage(Damage, DamageEvent, EventInstigator, DamageCauser);
+
+	State->SetHittedMode();
+
+	return Status->GetHealth();
 }
 
 void ACEnemy::Hitted()
@@ -111,6 +129,14 @@ void ACEnemy::Hitted()
 	DamageValue = 0.0f;
 
 	Status->SetStop();
+
+	if (Status->GetHealth() <= 0.0f)
+	{
+		State->SetDeadMode();
+
+		return;
+	}
+
 	Montages->PlayHitted();
 
 	FVector start = GetActorLocation();
@@ -124,18 +150,29 @@ void ACEnemy::Hitted()
 
 	ChangeColor(FLinearColor(1, 0, 0, 1));
 
-	UKismetSystemLibrary::K2_SetTimer(this, "RestoreColor", 0.2f, false);
+	UKismetSystemLibrary::K2_SetTimer(this, "RestoreColor", 0.1f, false);
+
 }
 
-float ACEnemy::TakeDamage(float Damage, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
+void ACEnemy::Dead()
 {
-	DamageInstigator = EventInstigator;
-	DamageValue = Super::TakeDamage(Damage, DamageEvent, EventInstigator, DamageCauser);
+	CheckFalse(State->IsDeadMode());
 
-	State->SetHittedMode();
-
-	return Status->GetHealth();
+	Montages->PlayDead();
 }
+
+void ACEnemy::Begin_Dead()
+{
+	Action->OffAllCollision();
+	
+	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+}
+
+void ACEnemy::End_Dead()
+{
+	Destroy();
+}
+
 
 void ACEnemy::RestoreColor()
 {
@@ -143,4 +180,3 @@ void ACEnemy::RestoreColor()
 
 	ChangeColor(color);
 }
-
