@@ -1,0 +1,8 @@
+{
+	"SourceFiles": [
+		"D:\\KHJ\\UnrealC-\\Source\\U05_Action\\U05_Action.Build.cs",
+		"D:\\KHJ\\UnrealC-\\Source\\U05_Action.Target.cs",
+		"D:\\KHJ\\UnrealC-\\Source\\U05_ActionEditor.Target.cs"
+	],
+	"EngineVersion": "4.27.2"
+}

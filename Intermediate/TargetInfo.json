@@ -1,0 +1,14 @@
+{
+	"Targets": [
+		{
+			"Name": "U05_Action",
+			"Path": "D:\\KHJ\\UnrealC-\\Source\\U05_Action.Target.cs",
+			"Type": "Game"
+		},
+		{
+			"Name": "U05_ActionEditor",
+			"Path": "D:\\KHJ\\UnrealC-\\Source\\U05_ActionEditor.Target.cs",
+			"Type": "Editor"
+		}
+	]
+}
