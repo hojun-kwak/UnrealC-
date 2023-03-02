@@ -159,12 +159,15 @@ void ACEnemy::Dead()
 	CheckFalse(State->IsDeadMode());
 
 	Montages->PlayDead();
+
+	// attachmentµµ »èÁ¦ÇØÁà¾ß°ÙÁö?
+
 }
 
 void ACEnemy::Begin_Dead()
 {
 	Action->OffAllCollision();
-	
+	CLog::Print("Test");
 	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 }
 

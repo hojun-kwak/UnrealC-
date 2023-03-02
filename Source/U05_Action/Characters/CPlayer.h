@@ -11,6 +11,9 @@ class U05_ACTION_API ACPlayer : public ACharacter, public IICharacter
 {
 	GENERATED_BODY()
 
+private:
+	UPROPERTY(EditDefaultsOnly)
+		TSubclassOf<class UCUserWidget_ActionList> ActionListClass;
 
 private:
 	UPROPERTY(VisibleDefaultsOnly)
@@ -38,6 +41,9 @@ private:
 
 	UPROPERTY(VisibleDefaultsOnly)
 		class UCStateComponent* State;
+
+public:
+	FORCEINLINE class UCUserWidget_ActionList* GetActionList() { return ActionList; }
 
 public:
 	ACPlayer();
@@ -72,18 +78,31 @@ public:
 
 private:
 
-	void OnFist();
-	void OnOneHand();
-	void OnTwoHand();
-	void OnWarp();
-	void OnFireStorm();
-
+	// 델리게이터 사용하기위해
+	UFUNCTION()
+		void OnFist();
+	UFUNCTION()
+		void OnOneHand();
+	UFUNCTION()
+		void OnTwoHand();
+	UFUNCTION()
+		void OnWarp();
+	UFUNCTION()
+		void OnFireStorm();
+	UFUNCTION()
+		void OnIceBall();
 
 	void OnDoAction();
 
 	void OnTarget();
 	void OnTargetLeft();
 	void OnTargetRight();
+
+	void OnAim();
+	void OffAim();
+
+	void OnViewActionList();
+	void OffViewActionList();
 
 
 public:
@@ -92,5 +111,7 @@ public:
 private:
 	class UMaterialInstanceDynamic* BodyMaterial;
 	class UMaterialInstanceDynamic* LogoMaterial;
+
+	class UCUserWidget_ActionList* ActionList;
 
 };

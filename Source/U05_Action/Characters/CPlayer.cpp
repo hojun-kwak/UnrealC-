@@ -13,6 +13,7 @@
 #include "Components/CMontagesComponent.h"
 #include "Materials/MaterialInstanceConstant.h"
 #include "Materials/MaterialInstanceDynamic.h"
+#include "Widgets/CUserWidget_ActionList.h"
 
 ACPlayer::ACPlayer()
 {
@@ -52,6 +53,8 @@ ACPlayer::ACPlayer()
 
 	GetCharacterMovement()->RotationRate = FRotator(0, 720, 0);
 	GetCharacterMovement()->bOrientRotationToMovement = true;
+
+	CHelpers::GetClass<UCUserWidget_ActionList>(&ActionListClass, "WidgetBlueprint'/Game/Widgets/WB_ActionList.WB_ActionList_C'");
 }
 
 void ACPlayer::BeginPlay()
@@ -74,6 +77,16 @@ void ACPlayer::BeginPlay()
 
 	Action->SetUnarmedMode();
 
+	ActionList = CreateWidget<UCUserWidget_ActionList, APlayerController>(GetController<APlayerController>(), ActionListClass);
+	ActionList->AddToViewport();
+	ActionList->SetVisibility(ESlateVisibility::Hidden);
+
+	ActionList->GetData(0).OnUserWidget_ActionItem_Clicked.AddDynamic(this, &ACPlayer::OnFist);
+	ActionList->GetData(1).OnUserWidget_ActionItem_Clicked.AddDynamic(this, &ACPlayer::OnOneHand);
+	ActionList->GetData(2).OnUserWidget_ActionItem_Clicked.AddDynamic(this, &ACPlayer::OnTwoHand);
+	ActionList->GetData(3).OnUserWidget_ActionItem_Clicked.AddDynamic(this, &ACPlayer::OnWarp);
+	ActionList->GetData(4).OnUserWidget_ActionItem_Clicked.AddDynamic(this, &ACPlayer::OnFireStorm);
+	ActionList->GetData(5).OnUserWidget_ActionItem_Clicked.AddDynamic(this, &ACPlayer::OnIceBall);
 }
 
 void ACPlayer::Tick(float DeltaTime)
@@ -98,12 +111,24 @@ void ACPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	PlayerInputComponent->BindAction("TwoHand", EInputEvent::IE_Pressed, this, &ACPlayer::OnTwoHand);
 	PlayerInputComponent->BindAction("Warp", EInputEvent::IE_Pressed, this, &ACPlayer::OnWarp);
 	PlayerInputComponent->BindAction("FireStorm", EInputEvent::IE_Pressed, this, &ACPlayer::OnFireStorm);
+	PlayerInputComponent->BindAction("IceBall", EInputEvent::IE_Pressed, this, &ACPlayer::OnIceBall);
+
 
 	PlayerInputComponent->BindAction("Action", EInputEvent::IE_Pressed, this, &ACPlayer::OnDoAction);
 
 	PlayerInputComponent->BindAction("Target", EInputEvent::IE_Pressed, this, &ACPlayer::OnTarget);
 	PlayerInputComponent->BindAction("TargetLeft", EInputEvent::IE_Pressed, this, &ACPlayer::OnTargetLeft);
 	PlayerInputComponent->BindAction("TargetRight", EInputEvent::IE_Pressed, this, &ACPlayer::OnTargetRight);
+
+	PlayerInputComponent->BindAction("Aim", EInputEvent::IE_Pressed, this, &ACPlayer::OnAim);
+	PlayerInputComponent->BindAction("Aim", EInputEvent::IE_Released, this, &ACPlayer::OffAim);
+
+	PlayerInputComponent->BindAction("ViewActionList", EInputEvent::IE_Pressed, this, &ACPlayer::OnViewActionList);
+	PlayerInputComponent->BindAction("ViewActionList", EInputEvent::IE_Released, this, &ACPlayer::OffViewActionList);
+
+	
+
+
 }
 
 void ACPlayer::OnMoveForward(float InAxis)
@@ -229,6 +254,13 @@ void ACPlayer::OnFireStorm()
 	Action->SetFireStormMode();
 }
 
+void ACPlayer::OnIceBall()
+{
+	CheckFalse(State->IsIdleMode());
+
+	Action->SetIceBallMode();
+}
+
 void ACPlayer::OnDoAction()
 {
 	Action->DoAction();
@@ -247,6 +279,41 @@ void ACPlayer::OnTargetLeft()
 void ACPlayer::OnTargetRight()
 {
 	Target->ChangeTargetRight();
+}
+
+void ACPlayer::OnAim()
+{
+	Action->DoAim();
+}
+
+void ACPlayer::OffAim()
+{
+	Action->UndoAim();
+}
+
+void ACPlayer::OnViewActionList()
+{
+	CheckFalse(State->IsIdleMode());
+
+	ActionList->SetVisibility(ESlateVisibility::Visible);
+
+	GetController<APlayerController>()->bShowMouseCursor = true;
+	GetController<APlayerController>()->SetInputMode(FInputModeGameAndUI());
+
+	// 게임을 조금 느리게
+	UGameplayStatics::SetGlobalTimeDilation(GetWorld(), 0.1f);
+
+}
+
+void ACPlayer::OffViewActionList()
+{
+	ActionList->SetVisibility(ESlateVisibility::Hidden);
+
+	GetController<APlayerController>()->bShowMouseCursor = false;
+	GetController<APlayerController>()->SetInputMode(FInputModeGameOnly());
+
+	UGameplayStatics::SetGlobalTimeDilation(GetWorld(), 1.0f);
+
 }
 
 
