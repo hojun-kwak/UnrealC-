@@ -19,11 +19,13 @@ protected:
 	UPROPERTY(BlueprintReadOnly, VisibleDefaultsOnly)
 		class USceneComponent* Scene;
 
-
 protected:
 	UFUNCTION(BlueprintCallable)
 		void AttachTo(FName InSocketName);
 
+protected:
+	UFUNCTION(BlueprintCallable)
+		void AttachClear(FName InSocketName);
 
 	UFUNCTION(BlueprintCallable)
 		void AttachToCollision(class UShapeComponent* InComponent, FName InSocketName);

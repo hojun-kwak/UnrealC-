@@ -3,6 +3,7 @@
 #include "CoreMinimal.h"
 #include "Animation/AnimInstance.h"
 #include "Components/CActionComponent.h"
+#include "Components/CFitComponent.h"
 #include "CAnimInstance.generated.h"
 
 
@@ -20,6 +21,9 @@ protected:
 
 	UPROPERTY(BlueprintReadOnly, EditAnywhere)
 		EActionType ActionType;
+
+	UPROPERTY(BlueprintReadOnly, EditAnywhere)
+		FFitData FitData;
 
 public:
 	virtual void NativeBeginPlay() override;

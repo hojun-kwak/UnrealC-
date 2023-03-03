@@ -1,6 +1,7 @@
 #include "CEnemy.h"
 #include "Global.h"
 #include "Actions/CActionData.h"
+#include "Actions/CAttachment.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Animation/AnimInstance.h"
 #include "Components/SkeletalMeshComponent.h"
@@ -167,13 +168,13 @@ void ACEnemy::Dead()
 void ACEnemy::Begin_Dead()
 {
 	Action->OffAllCollision();
-	CLog::Print("Test");
 	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 }
 
 void ACEnemy::End_Dead()
 {
 	Destroy();
+	// 무기를 찾아와서 같이 제거해주자
 }
 
 

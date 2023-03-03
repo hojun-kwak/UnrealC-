@@ -34,6 +34,10 @@ private:
 		class UCMontagesComponent* Montages;
 
 	UPROPERTY(VisibleDefaultsOnly)
+		class UCFitComponent* Fit;
+
+
+	UPROPERTY(VisibleDefaultsOnly)
 		class UCOptionComponent* Option;
 
 	UPROPERTY(VisibleDefaultsOnly)
@@ -60,6 +64,7 @@ private:
 	void OnMoveRight(float InAxis);
 	void OnHorizontalLook(float InAxis);
 	void OnVerticalLook(float InAxis);
+	void OnZoom(float InAxis);
 
 private:
 	void OnAvoid();

@@ -39,10 +39,15 @@ void ACDoAction_Throw::Begin_DoAction()
 	transform.SetRotation(FQuat(rotator));
 
 	FActorSpawnParameters params;
-	params.Owner = this;
 
-	ACThrow* throwObject = OwnerCharacter->GetWorld()->SpawnActor<ACThrow>(Datas[0].ThrowClass, transform, params);
+	//params.Owner = this; // 겹쳤을떄 터진다.
+	//params.SpawnCollisionHandlingOverride
+	//ACThrow* throwObject = OwnerCharacter->GetWorld()->SpawnActor<ACThrow>(Datas[0].ThrowClass, transform, params);
+
+	// 무조건 쏴버리고 스폰한다.
+	ACThrow* throwObject = OwnerCharacter->GetWorld()->SpawnActorDeferred<ACThrow>(Datas[0].ThrowClass, transform, OwnerCharacter, NULL, ESpawnActorCollisionHandlingMethod::AlwaysSpawn);
 	throwObject->OnThrowBeginOverlap.AddDynamic(this, &ACDoAction_Throw::OnThrowBeginOverlap);
+	UGameplayStatics::FinishSpawningActor(throwObject, transform);
 }
 
 void ACDoAction_Throw::End_DoAction()

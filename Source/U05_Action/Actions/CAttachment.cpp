@@ -50,7 +50,16 @@ void ACAttachment::OnComponentEndOverlap(UPrimitiveComponent* OverlappedComponen
 
 void ACAttachment::AttachTo(FName InSocketName)
 {
+	/*CLog::Print(this->GetActorLabel());
+	CheckFalse(State->IsDeadMode());*/
+
 	AttachToComponent(OwnerCharacter->GetMesh(), FAttachmentTransformRules(EAttachmentRule::KeepRelative, true), InSocketName);
+}
+
+void ACAttachment::AttachClear(FName InSocketName)
+{
+	Destroy();
+	//AttachToComponent(OwnerCharacter->GetMesh(), FAttachmentTransformRules(EAttachmentRule::KeepRelative, false), InSocketName);
 }
 
 void ACAttachment::AttachToCollision(UShapeComponent* InComponent, FName InSocketName)
